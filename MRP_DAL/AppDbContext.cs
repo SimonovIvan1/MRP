@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MRP_Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MRP_DAL.Entity;
 
-namespace MRP_Domain
+namespace MRP_DAL
 {
     public class AppDbContext : DbContext
     {
