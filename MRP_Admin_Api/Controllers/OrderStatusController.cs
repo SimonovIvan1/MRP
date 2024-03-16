@@ -8,7 +8,7 @@ namespace MRP_Admin_Api.Controllers
 {
     [ApiController]
 
-    [Route("api/admin/clients")]
+    [Route("api/admin/order-statuses")]
     public class OrderStatusController : Controller
     {
         private readonly OrderStatusRepository _repository;
@@ -33,12 +33,12 @@ namespace MRP_Admin_Api.Controllers
             }
         }
 
-        [HttpGet("{clientId}")]
-        public async Task<IActionResult> Get(int clientId)
+        [HttpGet("{orderStatusId}")]
+        public async Task<IActionResult> Get(int orderStatusId)
         {
             try
             {
-                var client = await _repository.Get(clientId);
+                var client = await _repository.Get(orderStatusId);
                 if (client == null) return NotFound("Статус заказа не найден");
                 return Ok(client);
             }
