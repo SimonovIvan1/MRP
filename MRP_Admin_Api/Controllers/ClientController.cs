@@ -11,11 +11,11 @@ namespace MRP_Admin_Api.Controllers
     [Route("api/admin/clients")]
     public class ClientController : Controller
     {
-        private readonly ClientRepository _clientRepository;
+        private readonly ClientRepository _repository;
         
         public ClientController(DbContextOptions<AppDbContext> db)
         {
-            _clientRepository = new ClientRepository(db);
+            _repository = new ClientRepository(db);
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace MRP_Admin_Api.Controllers
         {
             try
             {
-                var clients = await _clientRepository.GetAll();
+                var clients = await _repository.GetAll();
                 if (clients == null) return NotFound("Клиенты пропали или их пока нет");
                 return Ok(clients);
             }
@@ -38,7 +38,7 @@ namespace MRP_Admin_Api.Controllers
         {
             try
             {
-                var client = await _clientRepository.Get(clientId);
+                var client = await _repository.Get(clientId);
                 if (client == null) return NotFound("Клиент не найден");
                 return Ok(client);
             }
@@ -49,14 +49,14 @@ namespace MRP_Admin_Api.Controllers
         }
 
         [HttpDelete]
-        public async Task Delete(Guid id) => await _clientRepository.Delete(id);
+        public async Task Delete(Guid id) => await _repository.Delete(id);
 
         [HttpPost]
         public async Task<IActionResult> Create(ClientDto newClient)
         {
             try
             {
-                await _clientRepository.Create(newClient);
+                await _repository.Create(newClient);
                 return Ok("Клиент создан");
             }
             catch (Exception ex)
