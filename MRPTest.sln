@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRP_Public_API", "MRP_Publi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRP_Supplier_Helper", "MRP_Supplier_Helper\MRP_Supplier_Helper.csproj", "{409A56FF-6A74-4580-867D-98E62C776257}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalModels", "ExternalModels\ExternalModels.csproj", "{56A103C0-6177-4D2F-BA69-881C668CC3F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{409A56FF-6A74-4580-867D-98E62C776257}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{409A56FF-6A74-4580-867D-98E62C776257}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{409A56FF-6A74-4580-867D-98E62C776257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A103C0-6177-4D2F-BA69-881C668CC3F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A103C0-6177-4D2F-BA69-881C668CC3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A103C0-6177-4D2F-BA69-881C668CC3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A103C0-6177-4D2F-BA69-881C668CC3F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
