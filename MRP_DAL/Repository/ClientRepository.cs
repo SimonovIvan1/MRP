@@ -16,6 +16,11 @@ namespace MRP_DAL.Repository
 #nullable enable
         public async Task Create(ClientDto item)
         {
+            if (item.Id != null)
+            {
+                var clientDb = _db.Client.FirstOrDefaultAsync(x => x.Id == item.Id);
+                if (clientDb != null) throw new Exception("Клиент уже есть в базе!");
+            }
             var client = new Client()
             {
                 Id = Guid.NewGuid(),
