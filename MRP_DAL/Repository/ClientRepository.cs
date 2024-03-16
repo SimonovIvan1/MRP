@@ -1,18 +1,19 @@
 ﻿using ExternalModels;
 using Microsoft.EntityFrameworkCore;
 using MRP_DAL.Entity;
+using System.Net;
 
 namespace MRP_DAL.Repository
 {
     public class ClientRepository : IRepository<ClientDto>
     {
-        private AppDbContext _db;
+        private readonly AppDbContext _db;
 
         public ClientRepository(DbContextOptions<AppDbContext> db)
         {
             _db = new AppDbContext(db);
         }
-
+#nullable enable
         public async Task Create(ClientDto item)
         {
             var client = new Client()
@@ -34,14 +35,26 @@ namespace MRP_DAL.Repository
             _db.Client.Remove(client);
         }
 
-        public ClientDto Get(Guid id)
+        public async Task<ClientDto?> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var client = await _db.Client.FirstOrDefaultAsync(x => x.Id == id);
+            if (client == null) return default;
+            var clientDto = new ClientDto()
+            { 
+                Id = client.Id,
+                Email = client.Email,
+                Name = client.Name,
+                PhoneNumber = client.PhoneNumber,
+                Surname = client.Surname
+            };
+            return clientDto;
         }
 
-        public IEnumerable<ClientDto> GetAll()
+        public async Task<ClientDto[]> GetAll()
         {
-            throw new NotImplementedException();
+            var clients = await _db.Client.ToArrayAsync();
+            var clientsDto = clients.Cast<ClientDto>().ToArray();
+            return clientsDto;
         }
 
         public async Task Save()
@@ -51,7 +64,18 @@ namespace MRP_DAL.Repository
 
         public async Task Update(ClientDto item)
         {
-            throw new NotImplementedException();
+            var client = await _db.Client.FirstOrDefaultAsync(x => x.Id == item.Id);
+            if (client == null) return;
+            if (!string.IsNullOrWhiteSpace(item.Name))
+                client.Name = item.Name;
+            if (!string.IsNullOrWhiteSpace(item.Surname))
+                client.Surname = item.Surname;
+            if (!string.IsNullOrWhiteSpace(item.Email))
+                client.Email = item.Email;
+            if (!string.IsNullOrWhiteSpace(item.PhoneNumber))
+                client.PhoneNumber = item.PhoneNumber;
+            _db.Update(client);
+            await Save();
         }
     }
 }

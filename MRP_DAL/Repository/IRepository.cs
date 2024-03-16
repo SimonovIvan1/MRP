@@ -9,8 +9,8 @@ namespace MRP_DAL.Repository
     interface IRepository<T>
         where T : class
     {
-        IEnumerable<T> GetAll();
-        T Get(Guid id); 
+        Task<T[]> GetAll();
+        Task<T?> Get(Guid id); 
         Task Create(T item); 
         Task Update(T item);
         Task Delete(Guid id); 
