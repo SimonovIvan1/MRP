@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MRP_Domain.Entity
+﻿namespace MRP_DAL.Entity
 {
 #nullable disable
     internal class GoodsForSupplier

@@ -22,5 +22,6 @@ namespace MRP_Domain
         internal DbSet<Order> Order { get; set; }
         internal DbSet<Storehouse> Storehouse { get; set; }
         internal DbSet<Supplier> Supplier { get; set; }
+        internal DbSet<GoodsInOrder> GoodsInOrder { get; set; }
     }
 }

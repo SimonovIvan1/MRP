@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MRP_Domain.Entity
+﻿namespace MRP_DAL.Entity
 {
     internal class Supplier
     {
@@ -12,5 +6,6 @@ namespace MRP_Domain.Entity
         public string? Name { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+        public List<Goods> Goods { get; set; }
     }
 }

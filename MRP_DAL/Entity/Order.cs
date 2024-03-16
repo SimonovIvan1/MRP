@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MRP_Domain.Entity
+namespace MRP_DAL.Entity
 {
 #nullable disable
     internal class Order
@@ -14,6 +14,7 @@ namespace MRP_Domain.Entity
         public double TotalCost { get; set; }
         public int OrderStatusId { get; set; }
         public Client Client { get; set; }
+        public OrderStatus OrderStatus { get; set; }
         public List<GoodsInOrder> GoodsInOrder { get; set; }
     }
 }
