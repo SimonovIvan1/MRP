@@ -18,7 +18,7 @@ namespace MRP_DAL.Repository
         {
             if (item.Id != null)
             {
-                var clientDb = _db.Client.FirstOrDefaultAsync(x => x.Id == item.Id);
+                var clientDb = await _db.Client.FirstOrDefaultAsync(x => x.Id == item.Id);
                 if (clientDb != null) throw new Exception("Клиент уже есть в базе!");
             }
             var client = new Client()
@@ -58,8 +58,20 @@ namespace MRP_DAL.Repository
         public async Task<ClientDto[]> GetAll()
         {
             var clients = await _db.Client.ToArrayAsync();
-            var clientsDto = clients.Cast<ClientDto>().ToArray();
-            return clientsDto;
+            var clientsDto = new List<ClientDto>();
+            foreach(var client in clients)
+            {
+                var clientDto = new ClientDto()
+                {
+                    Id = client.Id,
+                    Email = client.Email,
+                    Name = client.Name,
+                    PhoneNumber = client.PhoneNumber,
+                    Surname = client.Surname
+                };
+                clientsDto.Add(clientDto);
+            }
+            return clientsDto.ToArray();
         }
 
         public async Task Save()

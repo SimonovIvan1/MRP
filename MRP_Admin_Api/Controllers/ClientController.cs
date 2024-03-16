@@ -33,7 +33,7 @@ namespace MRP_Admin_Api.Controllers
             }
         }
 
-        [HttpGet("/{clientId}")]
+        [HttpGet("{clientId}")]
         public async Task<IActionResult> Get(Guid clientId)
         {
             try
