@@ -1,7 +1,7 @@
-﻿namespace MRP_DAL.Entity
+﻿namespace ExternalModels
 {
 #nullable disable
-    internal class Storehouse
+    public class StorehouseDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

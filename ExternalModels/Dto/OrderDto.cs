@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MRP_DAL.Entity
+namespace ExternalModels
 {
 #nullable disable
-    internal class Order
+    public class OrderDto
     {
         public Guid Id { get; set; }
         public Guid ClientId { get; set; }

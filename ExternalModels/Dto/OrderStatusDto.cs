@@ -1,6 +1,6 @@
-﻿namespace MRP_DAL.Entity
+﻿namespace ExternalModels
 {
-    internal class OrderStatus
+    public class OrderStatusDto
     {
         public int Id { get; set; } 
         public string Name { get; set; }

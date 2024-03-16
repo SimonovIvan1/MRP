@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.28" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExternalModels\ExternalModels.csproj" />
+  </ItemGroup>
+
 </Project>
