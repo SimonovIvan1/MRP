@@ -19,8 +19,12 @@ namespace MRP_Admin_Api.Controllers
             _orderHelper = new OrderHelper(db);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll() => Ok(await _orderHelper.GetAll());
+
         [HttpPost]
         public async Task<IActionResult> Create(NewOrderDTO newOrder) => Ok(await _orderHelper.CreateOrder(newOrder));
+        
         [HttpPost("process-order")]
         public void ProcessOrder() => _orderHelper.ProcessOrder();
 

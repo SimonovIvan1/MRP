@@ -16,6 +16,29 @@ namespace MRP_DAL.Helpers
         {
             _db = new AppDbContext(db);
         }
+
+        public async Task<Order[]> GetAll()
+        {
+            var ordersDal = await _db.Order.ToArrayAsync();
+            var orders = new List<Order>();
+            foreach (var orderDal in ordersDal)
+            {
+                var order = new Order()
+                {
+                    Id = orderDal.Id,
+                    DateTimeCreated = orderDal.DateTimeCreated,
+                    Address = orderDal.Address,
+                    ClientId = orderDal.ClientId,
+                    OrderStatusId = orderDal.OrderStatusId,
+                    StatusDescription = orderDal.StatusDescription,
+                    ExpectedDelivery = orderDal.ExpectedDelivery,
+                    TotalCost = orderDal.TotalCost
+                };
+                orders.Add(order);
+            }
+            return orders.ToArray();
+        }
+
         public async Task<Order> CreateOrder(NewOrderDTO newOrder)
         {
             var totalCost = 0.0;
