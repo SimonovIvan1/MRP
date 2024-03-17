@@ -20,7 +20,7 @@ namespace MRP_DAL.Repository
                 var clientDb = await _db.Storehouse.FirstOrDefaultAsync(x => x.Id == item.Id);
                 if (clientDb != null) throw new Exception("Клиент уже есть в базе!");
             }
-            var client = new Storehouse()
+            var client = new StorehouseDAL()
             {
                 Id = Guid.NewGuid(),
                 Name = item.Name,

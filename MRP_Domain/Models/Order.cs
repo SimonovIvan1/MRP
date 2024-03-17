@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MRP_DAL.Entity
+namespace MRP_Domain.Entity
 {
 #nullable disable
-    internal class Order
+    public class Order
     {
         [Key]
         public Guid Id { get; set; }
@@ -13,6 +12,10 @@ namespace MRP_DAL.Entity
         public string Address { get; set; }
         public double TotalCost { get; set; }
         public int OrderStatusId { get; set; }
+#nullable enable
+        public string? StatusDescription { get; set; }
+        public DateTime? ExpectedDelivery { get; set; }
+#nullable disable
         public Client Client { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public List<GoodsInOrder> GoodsInOrder { get; set; }

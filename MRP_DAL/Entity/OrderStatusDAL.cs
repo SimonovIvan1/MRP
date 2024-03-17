@@ -1,9 +1,9 @@
 ﻿namespace MRP_DAL.Entity
 {
-    internal class OrderStatus
+    internal class OrderStatusDAL
     {
         public int Id { get; set; } 
         public string Name { get; set; }
-        public List<Order>? Orders { get; set; }
+        public List<OrderDAL>? Orders { get; set; }
     }
 }

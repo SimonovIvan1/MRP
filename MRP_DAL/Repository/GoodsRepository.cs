@@ -20,7 +20,7 @@ namespace MRP_DAL.Repository
                 var clientDb = await _db.Goods.FirstOrDefaultAsync(x => x.Id == item.Id);
                 if (clientDb != null) throw new Exception("Товар уже есть в базе!");
             }
-            var client = new Goods()
+            var client = new GoodsDAL()
             {
                 Id = Guid.NewGuid(),
                 Description = item.Description,

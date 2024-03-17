@@ -10,13 +10,13 @@ namespace MRP_DAL
         {
             Database.EnsureCreated();
         }
-        internal DbSet<OrderStatus> OrderStatus { get; set; }
-        internal DbSet<Client> Client { get; set; }
-        internal DbSet<Goods> Goods { get; set; }
-        internal DbSet<GoodsForSupplier> GoodsForSuppliers { get; set; }
-        internal DbSet<Order> Order { get; set; }
-        internal DbSet<Storehouse> Storehouse { get; set; }
-        internal DbSet<Supplier> Supplier { get; set; }
-        internal DbSet<GoodsInOrder> GoodsInOrder { get; set; }
+        internal DbSet<OrderStatusDAL> OrderStatus { get; set; }
+        internal DbSet<ClientDAL> Client { get; set; }
+        internal DbSet<GoodsDAL> Goods { get; set; }
+        internal DbSet<GoodsForSupplierDAL> GoodsForSuppliers { get; set; }
+        internal DbSet<OrderDAL> Order { get; set; }
+        internal DbSet<StorehouseDAL> Storehouse { get; set; }
+        internal DbSet<SupplierDAL> Supplier { get; set; }
+        internal DbSet<GoodsInOrderDAL> GoodsInOrder { get; set; }
     }
 }

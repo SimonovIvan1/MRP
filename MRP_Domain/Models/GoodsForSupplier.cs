@@ -1,7 +1,7 @@
-﻿namespace MRP_DAL.Entity
+﻿namespace MRP_Domain.Entity
 {
 #nullable disable
-    internal class GoodsForSupplier
+    public class GoodsForSupplier
     {
         public Guid Id { get; set; }
         public Guid GoodsId { get; set; }

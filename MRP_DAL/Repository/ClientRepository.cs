@@ -20,7 +20,7 @@ namespace MRP_DAL.Repository
                 var clientDb = await _db.Client.FirstOrDefaultAsync(x => x.Id == item.Id);
                 if (clientDb != null) throw new Exception("Клиент уже есть в базе!");
             }
-            var client = new Client()
+            var client = new ClientDAL()
             {
                 Id = Guid.NewGuid(),
                 Name = item.Name,

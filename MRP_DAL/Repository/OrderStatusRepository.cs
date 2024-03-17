@@ -17,7 +17,7 @@ namespace MRP_DAL.Repository
         {
             var orderStatusDb = await _db.OrderStatus.FirstOrDefaultAsync(x => x.Id == item.Id);
             if (orderStatusDb != null) throw new Exception("Статус заказа уже есть в базе!");
-            var orderStatus = new OrderStatus()
+            var orderStatus = new OrderStatusDAL()
             {
                 Id = item.Id,
                 Name = item.Name    
