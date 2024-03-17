@@ -87,8 +87,12 @@ namespace MRP_DAL.Helpers
                     needItems.Add(needItem);
                     parentItems.Add(needItem);
                 }
-            } 
-            
+            }
+            order.OrderStatusId = (int)OrderStatusType.AwaitingSupply;
+            order.ExpectedDelivery = DateTime.UtcNow.AddDays(7);
+            order.StatusDescription = $"Ваши товары будут доступны для получения после {order.ExpectedDelivery}";
+            _db.Order.Update(order);
+            await _db.SaveChangesAsync();
         }
 
         private async Task<List<GoodsDAL>> GetParentItems(List<GoodsInOrderDAL> goods)
