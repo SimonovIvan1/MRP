@@ -35,9 +35,9 @@ namespace MRP_DAL.Repository
 
         public async Task Delete(Guid id)
         {
-            var client = await _db.Client.FirstOrDefaultAsync(x => x.Id == id);
+            var client = await _db.Goods.FirstOrDefaultAsync(x => x.Id == id);
             if (client == null) return;
-            _db.Client.Remove(client);
+            _db.Goods.Remove(client);
         }
 
         public async Task<GoodsDto?> Get(Guid id)
