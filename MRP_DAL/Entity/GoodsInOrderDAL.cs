@@ -7,6 +7,7 @@
         public Guid GoodsId { get; set; }
         public Guid OrderId { get; set; }
         public int Quantity { get; set; }
+        public double Costs { get; set; }
         public OrderDAL Order { get; set; }
         public GoodsDAL Goods { get; set; }
     }
