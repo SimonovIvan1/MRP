@@ -21,5 +21,8 @@ namespace MRP_Admin_Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create(NewOrderDTO newOrder) => Ok(await _orderHelper.CreateOrder(newOrder));
+        [HttpPost("process-order")]
+        public void ProcessOrder() => _orderHelper.ProcessOrder();
+
     }
 }

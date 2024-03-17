@@ -22,7 +22,7 @@ namespace MRP_DAL.Helpers
             var order = new Order()
             { 
                 Id = Guid.NewGuid(),
-                DateTimeCreated = DateTime.Now,
+                DateTimeCreated = DateTime.UtcNow,
                 Address = newOrder.Address,
                 ClientId = newOrder.ClientId,
                 OrderStatusId = (int)OrderStatusType.Created,
@@ -48,7 +48,7 @@ namespace MRP_DAL.Helpers
             var newOrderDb = new OrderDAL()
             {
                 Id = order.Id,
-                DateTimeCreated = order.DateTimeCreated,
+                DateTimeCreated = DateTime.UtcNow,
                 Address = order.Address,
                 ClientId = order.ClientId,
                 OrderStatusId = (int)OrderStatusType.InProcessing,

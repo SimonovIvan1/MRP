@@ -4,7 +4,6 @@
     public class GoodsInOrderDto
     {
         public Guid GoodsId { get; set; }
-        public Guid OrderId { get; set; }
         public int Quantity { get; set; }
         public double Costs { get; set; }
     }
