@@ -1,7 +1,6 @@
 ﻿using ExternalModels;
 using Microsoft.EntityFrameworkCore;
 using MRP_DAL.Entity;
-using System.Net;
 
 namespace MRP_DAL.Repository
 {
