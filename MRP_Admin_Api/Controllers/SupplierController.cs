@@ -33,13 +33,13 @@ namespace MRP_Admin_Api.Controllers
             }
         }
 
-        [HttpGet("{clientId}")]
-        public async Task<IActionResult> Get(Guid clientId)
+        [HttpGet("{supplierId}")]
+        public async Task<IActionResult> Get(Guid supplierId)
         {
             try
             {
-                var client = await _repository.Get(clientId);
-                if (client == null) return NotFound("Клиент не найден");
+                var client = await _repository.Get(supplierId);
+                if (client == null) return NotFound("Поставщик не найден");
                 return Ok(client);
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace MRP_Admin_Api.Controllers
             try
             {
                 await _repository.Create(newSupplier);
-                return Ok("Клиент создан");
+                return Ok("Поставщик создан");
             }
             catch (Exception ex)
             {

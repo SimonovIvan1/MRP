@@ -39,7 +39,7 @@ namespace MRP_Admin_Api.Controllers
             try
             {
                 var client = await _repository.Get(goodsId);
-                if (client == null) return NotFound("Клиент не найден");
+                if (client == null) return NotFound("Товар не найден");
                 return Ok(client);
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace MRP_Admin_Api.Controllers
             try
             {
                 await _repository.Create(newGoods);
-                return Ok("Клиент создан");
+                return Ok("Товар создан");
             }
             catch (Exception ex)
             {

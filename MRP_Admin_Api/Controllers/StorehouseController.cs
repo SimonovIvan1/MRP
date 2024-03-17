@@ -33,13 +33,13 @@ namespace MRP_Admin_Api.Controllers
             }
         }
 
-        [HttpGet("{clientId}")]
+        [HttpGet("{storehouseId}")]
         public async Task<IActionResult> Get(Guid clientId)
         {
             try
             {
                 var client = await _repository.Get(clientId);
-                if (client == null) return NotFound("Клиент не найден");
+                if (client == null) return NotFound("Склад не найден");
                 return Ok(client);
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace MRP_Admin_Api.Controllers
             try
             {
                 await _repository.Create(newStorehouse);
-                return Ok("Клиент создан");
+                return Ok("Склад создан");
             }
             catch (Exception ex)
             {
