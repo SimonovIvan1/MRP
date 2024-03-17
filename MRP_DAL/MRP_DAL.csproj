@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExternalModels\ExternalModels.csproj" />
+    <ProjectReference Include="..\MRP_Domain\MRP_Domain.csproj" />
   </ItemGroup>
 
 </Project>
