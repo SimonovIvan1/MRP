@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MRP_DAL.Repository;
 using MRP_DAL;
+using MRP_Domain.Helpers;
 
 namespace MRP_Admin_Api.Controllers
 {
@@ -12,10 +13,12 @@ namespace MRP_Admin_Api.Controllers
     public class GoodsController : Controller
     {
         private readonly GoodsRepository _repository;
+        private readonly GoodsHelper _goodsHelper;
 
         public GoodsController(DbContextOptions<AppDbContext> db)
         {
             _repository = new GoodsRepository(db);
+            _goodsHelper = new GoodsHelper(db);
         }
 
         [HttpGet]
@@ -63,6 +66,12 @@ namespace MRP_Admin_Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost("get-goods-tree-or-delete")]
+        public async Task<IActionResult> WorkWithTree(bool isDelete, Guid id)
+        {
+            
         }
     }
 }
