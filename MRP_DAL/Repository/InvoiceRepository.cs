@@ -21,7 +21,8 @@ namespace MRP_DAL.Repository
                 Id = Guid.NewGuid(),
                 GoodId = item.GoodId,
                 Quantity = item.Quantity,
-                AccountingTime = item.AccountingTime
+                AccountingTime = item.AccountingTime,
+                IsAccounting = false
             };
             await _db.Invoice.AddAsync(newInvoice);
             await Save();
@@ -42,8 +43,8 @@ namespace MRP_DAL.Repository
             {
                 GoodId = invoice.GoodId,
                 Quantity = invoice.Quantity,
-                AccountingTime = invoice.AccountingTime
-
+                AccountingTime = invoice.AccountingTime,
+                IsAccounting = invoice.IsAccounting
             };
             return invoiceDto;
         }
@@ -58,7 +59,8 @@ namespace MRP_DAL.Repository
                 {
                     GoodId = invoice.GoodId,
                     Quantity = invoice.Quantity,
-                    AccountingTime = invoice.AccountingTime
+                    AccountingTime = invoice.AccountingTime,
+                    IsAccounting = invoice.IsAccounting
                 };
                 clientsDto.Add(clientDto);
             }

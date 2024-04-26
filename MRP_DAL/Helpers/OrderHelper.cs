@@ -1,11 +1,9 @@
 ﻿using ExternalModels;
 using ExternalModels.PublicApiDto;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MRP_DAL.Entity;
 using MRP_Domain.Entity;
 using MRP_Domain.Enum;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MRP_DAL.Helpers
 {
