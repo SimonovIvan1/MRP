@@ -60,22 +60,56 @@ namespace MRP_Domain.Helpers
                 parentItems.Clear();
                 foreach (var parentItem in copyParents)
                 {
-                    if (parentItem.ParentItemId == null) continue;
-                    var needItem = parentItemsDal.FirstOrDefault(x => x.Id == parentItem.ParentItemId);
-                    if (needItem == null) throw new Exception("Зависимого товара не существует!");
-                    needItems.Add(needItem);
-                    parentItems.Add(needItem);
+                    var childItem = await (from g in _db.Goods
+                                          join gp in _db.GoodsParams on g.Id equals gp.GoodId
+                                          where g.ParentItemId == parentItem.Id
+                                          select new GoodsDto()
+                                          {
+                                              Id = g.Id,
+                                              Description = gp.Description,
+                                              Name = gp.Name,
+                                              Price = gp.Price,
+                                              SupplierId = g.SupplierId,
+                                              Balance = gp.Balance,
+                                              IsMainItem = gp.IsMainItem,
+                                              ParentItemId = g.ParentItemId
+                                          }).FirstOrDefaultAsync();
+                    if (childItem == null) continue;
+                    needItems.Add(childItem);
+                    parentItems.Add(childItem);
                 }
             }
-            if(!isDelete)
+            var mainItem = await _db.Goods.FirstAsync(x => x.Id == needItems[0].ParentItemId);
+            if (!isDelete)
+            {
+                var mainItemInfo = await (from g in _db.Goods
+                                          join gp in _db.GoodsParams on g.Id equals gp.GoodId
+                                          where g.Id == mainItem.Id
+                                          select new GoodsDto()
+                                          {
+                                              Id = g.Id,
+                                              Description = gp.Description,
+                                              Name = gp.Name,
+                                              Price = gp.Price,
+                                              SupplierId = g.SupplierId,
+                                              Balance = gp.Balance,
+                                              IsMainItem = gp.IsMainItem,
+                                              ParentItemId = g.ParentItemId
+                                          }).FirstAsync();
+                needItems.Insert(0, mainItemInfo);
                 return needItems;
-
+            }
+                
+            
             needItems.Reverse();
             foreach(var item in needItems)
             {
                 var deletedItem = await _db.Goods.FirstOrDefaultAsync(x => x.Id == item.Id);
                 _db.Goods.Remove(deletedItem);
+                await _db.SaveChangesAsync();
             }
+            _db.Goods.Remove(mainItem);
+            await _db.SaveChangesAsync();
             return needItems;
         }
 
