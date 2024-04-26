@@ -1,4 +1,5 @@
-﻿using ExternalModels.PublicApiDto;
+﻿using ExternalModels;
+using ExternalModels.PublicApiDto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MRP_DAL.Entity;
@@ -93,14 +94,25 @@ namespace MRP_DAL.Helpers
                 .Include(x => x.GoodsInOrder)
                 .FirstOrDefaultAsync();
             if (order == null) return;
-            var parentItemsDal = await _db.Goods
-                .Where(x => x.IsMainItem == false)
-                .ToArrayAsync();
+            var parentItemsDal = await (from g in _db.Goods
+                                 join gp in _db.GoodsParams on g.Id equals gp.GoodId
+                                 where gp.IsMainItem == true
+                                 select new GoodsDto()
+                                 {
+                                     Id = g.Id,
+                                     Description = gp.Description,
+                                     Name = gp.Name,
+                                     Price = gp.Price,
+                                     SupplierId = g.SupplierId,
+                                     Balance = gp.Balance,
+                                     IsMainItem = gp.IsMainItem,
+                                     ParentItemId = g.ParentItemId
+                                 }).ToListAsync();
             var parentItems = await GetParentItems(order.GoodsInOrder);
-            var needItems = new List<GoodsDAL>();
+            var needItems = new List<GoodsDto>();
             while (parentItems.Count != 0)
             {
-                var copyParents = new List<GoodsDAL>(parentItems);
+                var copyParents = new List<GoodsDto>((IEnumerable<GoodsDto>)parentItems);
                 parentItems.Clear();
                 foreach (var parentItem in copyParents)
                 {
@@ -118,14 +130,27 @@ namespace MRP_DAL.Helpers
             await _db.SaveChangesAsync();
         }
 
-        private async Task<List<GoodsDAL>> GetParentItems(List<GoodsInOrderDAL> goods)
+        private async Task<List<GoodsDto>> GetParentItems(List<GoodsInOrderDAL> goods)
         {
-            var parentItems = new List<GoodsDAL>();
+            var parentItems = new List<GoodsDto>();
             foreach (var item in goods)
             {
                 var good = await _db.Goods.FirstOrDefaultAsync(x => x.Id == item.GoodsId);
                 if (good == null) throw new Exception("Товара не существует");
-                var parentItem = await _db.Goods.FirstOrDefaultAsync(x => x.Id == good.ParentItemId);
+                var parentItem = await (from g in _db.Goods
+                                        join gp in _db.GoodsParams on g.Id equals gp.GoodId
+                                        where gp.IsMainItem == true
+                                        select new GoodsDto()
+                                        {
+                                            Id = g.Id,
+                                            Description = gp.Description,
+                                            Name = gp.Name,
+                                            Price = gp.Price,
+                                            SupplierId = g.SupplierId,
+                                            Balance = gp.Balance,
+                                            IsMainItem = gp.IsMainItem,
+                                            ParentItemId = g.ParentItemId
+                                        }).FirstOrDefaultAsync();
                 if (parentItem == null) continue;
                 parentItems.Add(parentItem);
             }

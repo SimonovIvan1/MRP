@@ -15,7 +15,6 @@ namespace MRP_DAL
         internal DbSet<GoodsDAL> Goods { get; set; }
         internal DbSet<GoodsForSupplierDAL> GoodsForSuppliers { get; set; }
         internal DbSet<OrderDAL> Order { get; set; }
-        internal DbSet<StorehouseDAL> Storehouse { get; set; }
         internal DbSet<SupplierDAL> Supplier { get; set; }
         internal DbSet<GoodsInOrderDAL> GoodsInOrder { get; set; }
         internal DbSet<GoodsParamsDAL> GoodsParams { get; set; }

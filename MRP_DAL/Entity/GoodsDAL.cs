@@ -7,7 +7,6 @@
         public Guid SupplierId { get; set; }
         public Guid? ParentItemId { get; set; }
         public SupplierDAL Supplier { get; set; }
-        public StorehouseDAL Storehouse { get; set; }
         public GoodsParamsDAL GoodsParams { get; set; }
     }
 }

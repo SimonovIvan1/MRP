@@ -1,8 +1,7 @@
-﻿namespace MRP_DAL.Entity
+﻿namespace ExternalModels.Dto
 {
-    internal class InvoiceDAL
+    public class InvoiceDto
     {
-        public Guid Id { get; set; }
         public Guid GoodId { get; set; }
         public DateTime AccountingTime { get; set; }
         public int Quantity { get; set; }

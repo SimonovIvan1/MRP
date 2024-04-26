@@ -1,6 +1,7 @@
 ﻿using ExternalModels;
 using Microsoft.EntityFrameworkCore;
 using MRP_DAL.Entity;
+using MRP_Domain.Entity;
 
 namespace MRP_DAL.Repository
 {
@@ -17,19 +18,27 @@ namespace MRP_DAL.Repository
         {
             if (item.Id != null)
             {
-                var clientDb = await _db.Goods.FirstOrDefaultAsync(x => x.Id == item.Id);
-                if (clientDb != null) throw new Exception("Товар уже есть в базе!");
+                var goodsDb = await _db.Goods.FirstOrDefaultAsync(x => x.Id == item.Id);
+                if (goodsDb != null) throw new Exception("Товар уже есть в базе!");
             }
-            var client = new GoodsDAL()
+            var good = new GoodsDAL()
             {
                 Id = Guid.NewGuid(),
+                ParentItemId = item.ParentItemId,
+                SupplierId = item.SupplierId,
+            };
+            var goodParams = new GoodsParamsDAL()
+            {
                 Description = item.Description,
                 Name = item.Name,
                 Price = item.Price,
-                StorehouseId = item.StorehouseId,
-                SupplierId = item.SupplierId,
+                IsMainItem = item.IsMainItem,
+                GoodId = good.Id,
+                Balance = item.Balance
             };
-            await _db.Goods.AddAsync(client);
+            await _db.Goods.AddAsync(good);
+            await Save();
+            await _db.GoodsParams.AddAsync(goodParams);
             await Save();
         }
 
@@ -42,38 +51,44 @@ namespace MRP_DAL.Repository
 
         public async Task<GoodsDto?> Get(Guid id)
         {
-            var client = await _db.Goods.FirstOrDefaultAsync(x => x.Id == id);
-            if (client == null) return default;
+            var good = await _db.Goods.FirstOrDefaultAsync(x => x.Id == id);
+            if (good == null) return default;
+            var goodParams = await _db.GoodsParams.FirstOrDefaultAsync(x => x.GoodId == good.Id);
             var clientDto = new GoodsDto()
             {
-                Id = client.Id,
-                Description = client.Description,
-                Name = client.Name,
-                Price = client.Price,
-                StorehouseId = client.StorehouseId,
-                SupplierId = client.SupplierId
+                Id = good.Id,
+                Description = goodParams.Description,
+                Name = goodParams.Name,
+                Price = goodParams.Price,
+                SupplierId = good.SupplierId,
+                Balance = goodParams.Balance,
+                IsMainItem = goodParams.IsMainItem,
+                ParentItemId = good.ParentItemId
             };
             return clientDto;
         }
 
         public async Task<GoodsDto[]> GetAll()
         {
-            var clients = await _db.Goods.ToArrayAsync();
-            var clientsDto = new List<GoodsDto>();
-            foreach (var client in clients)
+            var goods = await _db.Goods.ToArrayAsync();
+            var goodsDtos = new List<GoodsDto>();
+            foreach (var good in goods)
             {
-                var clientDto = new GoodsDto()
+                var goodParams = await _db.GoodsParams.FirstOrDefaultAsync(x => x.GoodId == good.Id);
+                var goodDto = new GoodsDto()
                 {
-                    Id = client.Id,
-                    Description = client.Description,
-                    Name = client.Name,
-                    Price = client.Price,
-                    StorehouseId = client.StorehouseId,
-                    SupplierId = client.SupplierId
+                    Id = good.Id,
+                    Description = goodParams.Description,
+                    Name = goodParams.Name,
+                    Price = goodParams.Price,
+                    SupplierId = good.SupplierId,
+                    Balance = goodParams.Balance,
+                    IsMainItem = goodParams.IsMainItem,
+                    ParentItemId = good.ParentItemId
                 };
-                clientsDto.Add(clientDto);
+                goodsDtos.Add(goodDto);
             }
-            return clientsDto.ToArray();
+            return goodsDtos.ToArray();
         }
 
         public async Task Save()
@@ -85,10 +100,6 @@ namespace MRP_DAL.Repository
         {
             var client = await _db.Goods.FirstOrDefaultAsync(x => x.Id == item.Id);
             if (client == null) return;
-            if (!string.IsNullOrWhiteSpace(item.Name))
-                client.Name = item.Name;
-            if (!string.IsNullOrWhiteSpace(item.Description))
-                client.Description = item.Description;
             _db.Update(client);
             await Save();
         }
