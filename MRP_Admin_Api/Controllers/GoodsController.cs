@@ -52,7 +52,7 @@ namespace MRP_Admin_Api.Controllers
         }
 
         [HttpDelete]
-        public async Task Delete(Guid id) => await _repository.Delete(id);
+        public async Task Delete(Guid id) => await _goodsHelper.GetParentsTree(id, true);
 
         [HttpPost]
         public async Task<IActionResult> Create(GoodsDto newGoods)
@@ -69,9 +69,8 @@ namespace MRP_Admin_Api.Controllers
         }
 
         [HttpPost("get-goods-tree-or-delete")]
-        public async Task<IActionResult> WorkWithTree(bool isDelete, Guid id)
-        {
-            
-        }
+        public async Task<List<GoodsDto>> WorkWithTree(Guid? id)
+            => await _goodsHelper.GetParentsTree(id, false);
+        
     }
 }
